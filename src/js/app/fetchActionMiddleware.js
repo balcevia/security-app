@@ -44,14 +44,15 @@ const fetchActionMiddleware = ({dispatch}) => next => action => {
       return Promise.resolve(effectiveData);
     })
     .catch(error => {
-      console.error('async action execution failed', error);
-      dispatch(fetchActions.setFetchRequestRejected(types.BASE, error));
+      const e = error.toString()
+      console.error('async action execution failed', e);
+      dispatch(fetchActions.setFetchRequestRejected(types.BASE, e));
       dispatch({
         type: types.REJECTED,
-        payload: error
+        payload: e
       });
-      dispatch(alertActions.showAlert(error));
-      return Promise.reject(error);
+      dispatch(alertActions.showAlert(e));
+      return Promise.reject(e);
     })
 };
 
